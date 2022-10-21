@@ -1,0 +1,129 @@
+Copyright 2021-2022 Ceausu Matei Calin - grupa 311CA
+README - my_octave
+
+Pentru rezolvarea operatiilor am decis sa definesc un struct care sa retina
+pentru fiecare matrice numarul de linii (line), numarul de coloane (column) si
+valorile sale (values).
+Initial am declarat o variabila de tip character prin care stabilesc ce
+operatie trebuie efectuata (operation). Am intializat-o cu un caracter diferit
+de oricare caracter specific unei operatii pentru a fi sigur ca structura
+repetitiva se executa cel putin o data. Am declarat dinamic un vector de
+struct matrix cu 50 de elemente si de fiecare data cand este nevoie il
+realoc si adaug inca 50 de elemente.
+In cadrul structurii repetitive citesc tipul operatiei prin intermediul
+functiei getchar. Dupa executarea operatiei respective trebuie citit
+caracterul '\n' pentru a nu fi stocat in variabila operation. De asemenea,
+am folosit o variabila semafor (ok) pe care am intializat-o cu valorarea 1.
+Aceasteia ii va fi atribuita valoarea zero in cazul in care operatia citita
+este una recunoscuta. Daca la final, variabila ok isi pastreaza valoarea 0,
+atunci inseamna ca operatia citita nu este recunoscuta si se afiseaza mesajul
+corespunzator. 
+
+
+Pentru operatia L (Incarcarea in memorie a unei matrice):
+
+Se citeste numarul de linii si de matrici, se aloca dinamic memoria necesara
+pentru matricea respectiva si cresc cu o unitate numarul de matrici. In cazul
+in care numarul de matrici ajunge la un multiplu de 50, voi realoca memoria
+adaugand inca 50 de elemente pentru vectorul de struct matrix.
+
+
+Pentru operatia D (Determinarea dimensiunilor unei matrice):
+
+Am definit functia print_dimensions. In cadrul functiei se citeste indicele
+matricii careia trebuie sa ii fie afisate dimensiunile. In cazul in care
+indicele este mai mare decat numarul de matrici memorate sau este negativ,
+inseamna ca nu exista o matrice la adresa respectiva si se afiseaza
+mesajul corespunzator. In cazul in care exista, se afiseaza dimensiunile.
+
+
+Pentru operatia P (Afisarea unei matrice):
+
+Am definit functia print_matrix. In aceasta functie se citeste indexul
+matricei pe care trebuie sa o afisam. In cazul in care indexul este
+mai mare decat numarul de matrici memorate sau este negativ, inseamna ca nu
+exista o matrice la adresa respectiva si se afiseaza mesajul corespunzator.
+In cazul in care exista, se afiseaza valoriile corespunzatoare.
+
+
+Pentru operatia C (Redimensionarea a doua matrice):
+
+Am definit functia resize_matrix. In cadrul acestei functii am citit
+indexul matricei si in cazul in care nu exista matricea respectiva am afisat
+mesajul corespunzator. Am alocat dinamic doi vectori care retin indicii
+liniilor si coloanelor care se vor pastra in noua matrice. Dupa citirea si
+memorarea numarului de linii, a numarului de coloane si indicii de linie si
+de coloana, se construieste noua matrice. Eliberam matricea care se afla
+initial la indexul citit si se retin noile valori. De asemenea, se elibereaza
+vectorii folositi pentru linii si pentru coloane.
+
+
+Pentru operatia M (Inmultirea a doua matrice):
+
+Am citit indicii matricelor care trebuiesc inmultite si am verificat daca
+exista. In cazul in care nu exista matrici la indicii respectivi afisez mesajul
+corespunzator. Apoi verific daca se poate realiza inmultirea, adica daca
+numarul de coloane ale primei matrici este egal cu numarul de linii ale celei
+de a doua. In cazul in care nu se poate, se afiseaza mesajul corespunzator.
+In cazul in care inmultirea este posibila, se apeleaza functia multiply,
+care creaza o noua matrice care retine produsul celor doua matrici si o
+stocheaza in memoriei. In cazul in care elementele matricei sunt mai mari
+decat 10^4 + 7, se retine restul impartirii la 10^4 + 7. In cazul in care
+elementul este negativ se aduna 10^4 + 7. Se adauga o unitate la numarul de
+matrici si daca este nevoie se realoca vectorul de struct matrix adaugand
+inca 50 de elemente.
+
+
+Pentru operatia O (Sortarea matricelor):
+
+Am definit functia sort_sum, in care aloc dinamic un vector s, astfel incat
+s[i] contine suma elementelor modulo 10^4 + 7 ale matricii cu indicele i.
+Am sortat acest vector prin metoda "Selection sort". In cazul in care
+s[i] > s[j], interschimbam s[i] cu s[j], v[i].valuse cu v[j].values, v[i].line
+cu v[j].line si v[i].column cu v[j].column. La final eliberam vectorul s.
+
+
+Pentru operatia T (Transpunerea unei matrice):
+
+Am definit functia traspose. In aceasta functie se citeste indicele matricei
+care trebuie transpusa. Se verifica daca indicele este mai mic decat numarul
+de matrici din memorie si daca este pozitiv. In acest caz, aloc dinamic o
+matrice care retine transpusa (in matricea "transpose" elementul de pe pozitia
+(i, j) este egal cu elementul din matricea cu indicele citit de pe pozitia
+(j, i)). Se elibereaza matricea initiala si se pune in locul ei transpusa.
+In caz contrar, cand inidicele nu respecta cerintele respective se afiseaza
+mesajul corespunzator.
+
+
+Pentru operatia F (Eliberarea memoriei unei matrici):
+
+Am definit functia free_and_move. In cadrul acestei functii am citit indicele
+matricei care trebuie eliberata. In cazul in care nu exista matrice la
+indicele respectiv se afiseaza mesajul corespunzator. Daca exista eliberez
+matricea cu indicele citit si o sterg din memorie suprapunand-o cu
+elementul urmator din vectorul de structuri matrix. De asemenea, se scade o
+unitate din numarul de matrici.
+
+
+Pentru operatia Q (Eliberarea tuturor resurselor):
+
+Am creat functia quit_and_free. Eliberez toate matricile stocate in vectorul
+de struct matrici. Dupa executarea functiei, se iese din structura repetitiva,
+deoarece in variabila operation se afla caracterul 'Q' si se incheie
+executarea programului.
+
+
+Pentru operatia S (Algoritmul lui Strassen):
+
+Am definit functia operation_S, in cadrul careia se citesc indicii matricilor
+care trebuiesc inmutite si se verifica daca acestea exista. In cazul in care nu
+exista se afiseaza mesajul corespunzator. In cazul in care exista, se verifica
+daca operatia de inmultire este posibila, adica daca au dimenisiunile egale,
+deoarece matriciile sunt patratice, fapt garantat de teste.
+In plus, am definit 3 functii: una care realizeaza suma a doua matrici, una
+care realizeaza diferenta a doua matrici si una care copiaza elementele unei
+matrici in alta.
+In cadrul functiei strassen_multiply am impartit cele doua matrici in patru
+matrici bloc, iar apoi am urmat operatiile descrise de Algoritmul lui
+Strassen. La final construiesc matricea produs (C) si eliberez memoria
+folosita la aceasta operatie. Complexitate: O(n^log(7)) = O(n^2.81).
